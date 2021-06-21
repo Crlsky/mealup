@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, Image, Modal } from 'react-native';
 import Header from '../components/header';
+import ProductList from '../components/productList';
+import Footer from '../components/footer';
 
 export default function Home() {
     const productList = [
@@ -12,7 +14,8 @@ export default function Home() {
     return (
         <View style={styles.container}>
             <Header />
-            
+            <ProductList productList={productList}/>
+            <Footer />
         </View>
     );
 }

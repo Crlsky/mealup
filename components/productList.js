@@ -1,21 +1,27 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function ProductList({ productList }) {
+    // const items = productList.map((listItem)=>{
+
+    // })
     return (
-        <View style={styles.list}>
-            <Text style={styles.listItem}>Brak produktów</Text>
-        </View>
+        <ScrollView >
+            {productList.map((listItem)=>{
+                <Text style={styles.listItem}>{listItem.name} | {listItem.quantity*listItem.kcal/100}</Text>
+            })}
+            <Text style={styles.listItem}>last item</Text>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    header: {
+    list: {
+        flex: 1,
         alignSelf: 'stretch',
-        justifyContent: 'space-between',
-        backgroundColor: 'dodgerblue',
+        backgroundColor: 'green',
         flexDirection: 'row',
-        paddingTop: '7%',
+        padding: '3%',
         paddingLeft: 5,
     },
 
