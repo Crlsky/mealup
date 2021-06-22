@@ -1,16 +1,17 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, FlatList } from 'react-native';
+import ListItem from './listItem';
 
-export default function ProductList({ productList }) {
-    // const items = productList.map((listItem)=>{
+export default function ProductList({ productList }) { 
 
-    // })
     return (
         <ScrollView >
-            {productList.map((listItem)=>{
-                <Text style={styles.listItem}>{listItem.name} | {listItem.quantity*listItem.kcal/100}</Text>
-            })}
-            <Text style={styles.listItem}>last item</Text>
+            <FlatList
+                data={productList}
+                renderItem={({item})=>(
+                    <ListItem item={item} />
+              )}
+            />
         </ScrollView>
     )
 }

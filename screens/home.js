@@ -15,7 +15,7 @@ export default function Home() {
         <View style={styles.container}>
             <Header />
             <ProductList productList={productList}/>
-            <Footer />
+            <Footer productList={productList}/>
         </View>
     );
 }

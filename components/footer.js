@@ -1,26 +1,29 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Counter from './counter';
+import AddButton from './addButton';
 
 export default function footer({ navigate }) {
     return (
         <View style={styles.footer}>
-            <Counter />
-            <Counter />
-
+            <View style={styles.btnContainer}>
+                <Counter />
+                <AddButton />
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     footer: {
-        backgroundColor: 'red',
+        paddingBottom: 5,
         alignSelf: 'stretch',
     },
 
-    btnContainer: {        
+    btnContainer: {
+        paddingRight: '2%',
         alignSelf: 'stretch',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         flexDirection: 'row',
     }
 });
