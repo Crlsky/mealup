@@ -8,6 +8,7 @@ export default function ProductList({ productList }) {
         <ScrollView >
             <FlatList
                 data={productList}
+                keyExtractor={(item)=> item.id}
                 renderItem={({item})=>(
                     <ListItem item={item} />
               )}
@@ -16,19 +17,18 @@ export default function ProductList({ productList }) {
     )
 }
 
-const styles = StyleSheet.create({
-    list: {
-        flex: 1,
-        alignSelf: 'stretch',
-        backgroundColor: 'green',
-        flexDirection: 'row',
-        padding: '3%',
-        paddingLeft: 5,
-    },
+// const styles = StyleSheet.create({
+//     list: {
+//         flex: 1,
+//         alignSelf: 'stretch',
+//         flexDirection: 'row',
+//         padding: '3%',
+//         paddingLeft: 5,
+//     },
 
-    title: {
-        color: 'white',
-        fontSize: 40,
-        fontWeight: 'bold',
-    }
-});
+//     title: {
+//         color: 'white',
+//         fontSize: 40,
+//         fontWeight: 'bold',
+//     }
+// });

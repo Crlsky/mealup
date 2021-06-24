@@ -6,9 +6,9 @@ import Footer from '../components/footer';
 
 export default function Home() {
     const productList = [
-        {name: 'test', quantity: '200', unit: 'ml', kcal: '139'},
-        {name: 'test2', quantity: '200', unit: 'ml', kcal: '169'},
-        {name: 'test3', quantity: '200', unit: 'ml', kcal: '999'},
+        {id: 1, name: 'test', quantity: '200', unit: 'ml', kcal: '139'},
+        {id: 2, name: 'test2', quantity: '200', unit: 'ml', kcal: '169'},
+        {id: 3, name: 'test3', quantity: '200', unit: 'ml', kcal: '999'},
     ]
 
     return (
@@ -23,6 +23,5 @@ export default function Home() {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: 'cadetblue',
   }
 }

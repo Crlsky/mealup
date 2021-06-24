@@ -4,32 +4,56 @@ import { StyleSheet, Text, View, } from 'react-native';
 export default function ListItem({item}) {
     return (
         <View style={styles.productContainer}>
-            <Text>{item.name}|{item.quantity*item.kcal/100}</Text>
+            <View style={styles.row}>
+                <Text style={styles.productName}>{item.name}</Text>
+                <Text style={styles.trash}>🗑️</Text>
+            </View>
+
+            <View style={styles.row}>
+                <Text style={styles.productQuantity}>{item.quantity}g</Text>
+                <Text>{item.quantity*item.kcal/100} kcal</Text>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     productContainer: {
+        flexDirection: 'column',
+        // flexWrap: 'wrap',
         display:'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         alignSelf: 'center',
-        width: '80%',
+        width: '90%',
         height: 70,
-        padding: '2%',
+        padding: 5,
+        paddingBottom: 10,
         marginTop: 20,
         borderRadius: 20,
-        backgroundColor: 'lightgreen',
+        borderColor: '#006BA6',
+        borderWidth: 5,
     },
 
-    unitText: {
-        fontSize: 30,
-        marginRight: 30,
-        marginLeft: 10,   
+    row: {
+        flexDirection: 'row',
+        paddingLeft: 5,
+        paddingRight: 5,
+        marginTop: 2,
+        justifyContent: 'space-between',
+    },
+
+    productName: {
+        fontSize: 20,
+        alignSelf: 'flex-start', 
     },
     
-    summaryDisplay: {
-        fontSize: 40,
+    productQuantity: {
+        fontSize: 15,
+        alignSelf: 'flex-start',
+    },
+
+    trash: {
+
     }
 
 });
