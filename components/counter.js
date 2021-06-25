@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, } from 'react-native';
 
-export default function Counter() {
+export default function Counter({productList}) {
+    const counter = productList.reduce((count,v) =>  count += v.kcal*v.quantity/100 , 0)
+
     return (
         <View style={styles.counterContainer}>
-            <Text style={styles.summaryDisplay}>3123123</Text>
+            <Text style={styles.summaryDisplay}>{counter}</Text>
             <Text style={styles.unitText}>kcal</Text>
         </View>
     )

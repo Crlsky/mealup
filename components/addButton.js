@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, } from 'react-native';
 
-export default function AddButton() {
+export default function AddButton({navigation}) {
     return (
         <View style={styles.circle}>
-            <Text style={styles.buttonText}>+</Text>
+            <Text 
+                style={styles.buttonText}
+                onPress={()=>navigation.navigate('Scanner')}>+</Text>
         </View>
     )
 }

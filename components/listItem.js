@@ -1,12 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, } from 'react-native';
 
-export default function ListItem({item}) {
+export default function ListItem({item, deleteProduct}) {
     return (
         <View style={styles.productContainer}>
             <View style={styles.row}>
                 <Text style={styles.productName}>{item.name}</Text>
-                <Text style={styles.trash}>🗑️</Text>
+                <Text 
+                    style={styles.trash}
+                    onPress={()=>{deleteProduct(item.id)}}>🗑️</Text>
             </View>
 
             <View style={styles.row}>
@@ -20,7 +22,6 @@ export default function ListItem({item}) {
 const styles = StyleSheet.create({
     productContainer: {
         flexDirection: 'column',
-        // flexWrap: 'wrap',
         display:'flex',
         justifyContent: 'flex-start',
         alignSelf: 'center',

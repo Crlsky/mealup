@@ -2,33 +2,17 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, FlatList } from 'react-native';
 import ListItem from './listItem';
 
-export default function ProductList({ productList }) { 
+export default function ProductList({ productList, deleteProduct }) { 
 
     return (
         <ScrollView >
             <FlatList
                 data={productList}
-                keyExtractor={(item)=> item.id}
+                keyExtractor={(item)=> item.id.toString()}
                 renderItem={({item})=>(
-                    <ListItem item={item} />
+                    <ListItem item={item} deleteProduct={deleteProduct}/>
               )}
             />
         </ScrollView>
     )
 }
-
-// const styles = StyleSheet.create({
-//     list: {
-//         flex: 1,
-//         alignSelf: 'stretch',
-//         flexDirection: 'row',
-//         padding: '3%',
-//         paddingLeft: 5,
-//     },
-
-//     title: {
-//         color: 'white',
-//         fontSize: 40,
-//         fontWeight: 'bold',
-//     }
-// });

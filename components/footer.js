@@ -3,12 +3,12 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import Counter from './counter';
 import AddButton from './addButton';
 
-export default function footer({ navigate }) {
+export default function Footer({ productList, navigation }) {
     return (
         <View style={styles.footer}>
             <View style={styles.btnContainer}>
-                <Counter />
-                <AddButton />
+                <Counter productList={productList} />
+                <AddButton navigation={navigation}/>
             </View>
         </View>
     )
