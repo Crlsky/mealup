@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Image, Modal } from 'react-native';
+import { Text, View, StyleSheet, Button, Image,  } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import ProductModal from '../components/addProductModal';
 
 export default function Scanner() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -14,17 +15,42 @@ export default function Scanner() {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    setModalVisible(true);
-    fetch('https://world.openfoodfacts.org/api/v0/product/'+data+'.json')
+  const openFoodFacts = (ean) => {
+    fetch('https://world.openfoodfacts.org/api/v0/product/'+ean+'.json')
     .then((response) => response.json())
     .then((json) => {
-      setModalVisible(false);
+      if(json==='undefined' || json.status == 0){
+        return false;
+      }
       const name = json.product.product_name;
       const kcal = json.product.nutriments['energy-kcal_100g'];
       alert(`Product ${name} has ${kcal} kcal in 100g`);
     })
+  }
+
+  const mealUpDB = (ean) => {
+    console.log(ean);
+    fetch('http://memecloud.co:8081/classes/ajax/getProducts.php?ean='+ean)
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json.status);
+      if(json.status == '0'){
+        setModalVisible(true);
+        return 0;
+      }
+
+      const name = json.name_pl;
+      const kcal = json.kcal;
+      alert(`Product ${name} has ${kcal} kcal in 100g`);
+    })
+  }
+
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    // if(!openFoodFacts(data))
+    mealUpDB(data);
+    
+    setTimeout(rescanning, 3000);
   };
 
   const rescanning = () => {
@@ -40,19 +66,11 @@ export default function Scanner() {
 
   return (
     <View style={styles.container}>
-      <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-         
-        >
-          <Image source={{uri: 'https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif?cid=790b7611047b4cd289850424f1e16fcc24fa47ddf688e0bf&rid=giphy.gif'}} />
-        </Modal>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && <Button title={'Tap to Scan Again'} onPress={rescanning} />}
+      <ProductModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
     </View>
   );
 }
@@ -61,5 +79,6 @@ const styles = {
   container: {
     flex: 1,
     paddingTop: 40
-  }
+  },
+
 }
