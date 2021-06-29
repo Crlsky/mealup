@@ -6,9 +6,9 @@ import Footer from '../components/footer';
 
 export default function Home({navigation}) {
     const [productList, setProductList] = useState([
-        {id: 1, name: 'test', quantity: 200, unit: 'ml', kcal: 139},
-        {id: 2, name: 'test2', quantity: 200, unit: 'ml', kcal: 169},
-        {id: 3, name: 'test3', quantity: 200, unit: 'ml', kcal: 999},
+        {id: 1, name: 'wika', quantity: 200, unit: 'ml', kcal: 139},
+        {id: 2, name: 'to', quantity: 200, unit: 'ml', kcal: 169},
+        {id: 3, name: 'chuj', quantity: 200, unit: 'ml', kcal: 9},
     ])
 
     const deleteProduct = (id) => {

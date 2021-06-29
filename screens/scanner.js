@@ -7,6 +7,7 @@ export default function Scanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [ean, setEan] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -46,10 +47,11 @@ export default function Scanner() {
   }
 
   const handleBarCodeScanned = ({ type, data }) => {
+    setEan(data);
     setScanned(true);
-    // if(!openFoodFacts(data))
+    // if(!openFoodFacts(ean))
     mealUpDB(data);
-    
+  
     setTimeout(rescanning, 3000);
   };
 
@@ -70,7 +72,10 @@ export default function Scanner() {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      <ProductModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <ProductModal 
+        modalVisible={modalVisible} 
+        setModalVisible={setModalVisible} 
+        ean={ean} />
     </View>
   );
 }
@@ -78,7 +83,7 @@ export default function Scanner() {
 const styles = {
   container: {
     flex: 1,
-    paddingTop: 40
+    paddingTop: 40,
+    backgroundColor: 'dodgeblue',
   },
-
 }
