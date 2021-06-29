@@ -5093,6 +5093,11 @@ querystringify@^2.1.1:
   resolved "https://registry.npmjs.org/querystringify/-/querystringify-2.2.0.tgz"
   integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
+radio-buttons-react-native-expo@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/radio-buttons-react-native-expo/-/radio-buttons-react-native-expo-1.0.0.tgz#6d9f00b8f9acf85cc6b1fc4ad8289ec52c1a7ffa"
+  integrity sha512-k4cndwcW8Kal77qfKDsDK+tOi+HWj7ERpwxvd8Vz7zMrlZ952+ByHHDUDudCdjOBPbK/arndeMtLPn8MiimEYw==
+
 range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz"

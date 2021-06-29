@@ -1,7 +1,40 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View, Modal, Pressable } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
+
+
 
 export default function ProductModal({modalVisible, setModalVisible}) {
+    const [name, onChangeName] = useState(null);
+    const [manufacturer, onChangeManufacturer] = useState(null);
+    const [calories, onChangeCalories] = useState(null);
+    const dataRadio = [
+        {
+          label: 'ml',
+          accessibilityLabel: 'ml'
+         },
+         {
+          label: 'g',
+          accessibilityLabel: 'g'
+         }
+        ];
+
+
+
+    const saveNewProduct = (jsonProduct) => {
+        fetch('http://memecloud.co:8081/classes/ajax/insertProduct.php',{
+            headers: {
+
+            },
+            method: "POST",
+            body: jsonProduct
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            console.log(json)
+        })
+    }
+
     return (
         <View>
              <Modal
@@ -15,12 +48,44 @@ export default function ProductModal({modalVisible, setModalVisible}) {
             >
                 <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Hello World!</Text>
+                    <Text style={styles.modalText}>Product no found!</Text>
+                    <Text style={styles.modalText}>Would you like to help us and add this product to database? It will take less than 3 min.</Text>
+
+                    {/* name input */}
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeName}
+                        value={name}
+                    />
+                    {/* manufacturer input */}
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeManufacturer}
+                        value={manufacturer}
+                    />
+                    {/* calories input / 100 units */}
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onChangeCalories}
+                        value={calories}
+                        keyboardType="numeric"
+                    />
+                    {/* unit radioInput  */}
+
+
                     <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}
+                        style={[styles.button, styles.buttonAdd]}
+                        disabled={name && calories && manufacturer ? false : true}
+                        onPress={() => setModalVisible(!modalVisible)}
                     >
-                    <Text style={styles.textStyle}>Hide Modal</Text>
+                    <Text style={styles.textStyle}>Add</Text>
+                    </Pressable>
+
+                    <Pressable
+                        style={[styles.button, styles.buttonClose]}
+                        onPress={() => setModalVisible(!modalVisible)}
+                    >
+                    <Text style={styles.textStyle}>No</Text>
                     </Pressable>
                 </View>
                 </View>
@@ -56,7 +121,7 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 2
       },
-      buttonOpen: {
+      buttonAdd: {
         backgroundColor: "#F194FF",
       },
       buttonClose: {
