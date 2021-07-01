@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TextInput, Modal, ScrollView } from 'react-native';
+import React, { useState,  } from 'react';
+import { View, StyleSheet, Platform, TouchableOpacity, Text, KeyboardAvoidingView} from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import Header from '../components/header';
-import Footer from '../components/footer';
 import ProductList from '../components/productList';
+import CategoryContainer from '../components/categoryContainer';
 
 export default function Category({navigation}) {
-    const [categoryId, setCategoryId] = useState(null);
-    const [search, setSearch] = useState(null);
+    const [search, setSearch] = useState();
     const [searchProductList, setList] = useState([]);
 
     const searchProduct = (productName) => {
+        setSearch(productName);
         if(productName.length>=2){
             fetch('http://memecloud.co:8081/classes/ajax/getProducts.php?name='+productName)
             .then((response) => response.json())
             .then((json) => {
+                console.log(json);
                 if(json.status==1)
                     setList([]);
                     json['products'].map((anObjectMapped, index) => {
@@ -26,8 +26,25 @@ export default function Category({navigation}) {
         }else{
             setList([])
         }
-        console.log(searchProductList.length);
     }
+
+    const getProductByCategory = (idCategory, name) => {
+        setSearch(name);
+        fetch('http://memecloud.co:8081/classes/ajax/getProducts.php?idGroup='+idCategory)
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json)
+                if(json.status==1)
+                    setList([]);
+                    json['products'].map((anObjectMapped, index) => {
+                        setList((prevList)=>{
+                            return [{id: anObjectMapped.id_product, name: anObjectMapped.name_en, kcal: anObjectMapped.kcal, unit: anObjectMapped.unit}, ...prevList]
+                        })
+                    })
+            })
+    }
+
+
     return (
         <View style={styles.container}>
             {/* search */}
@@ -37,19 +54,36 @@ export default function Category({navigation}) {
                 value={search}
             />
             {/* category list or product list if( search != null || id category != null) */}
-            {searchProductList.length > 0 || categoryId
+            {searchProductList.length > 0
                 ? <ProductList productList={searchProductList} />
-                : <Text>Na razie tu nic nie ma ale będą kafelki </Text>
+                : <CategoryContainer navigation={navigation} getProductByCategory={getProductByCategory}/>
             }
-            {/* footer use ready footer
-            <Footer navigation={navigation}/> */}
+            {/* footer */}
+            <KeyboardAvoidingView>
+                <View style={styles.footer}>
+                    <View style={styles.btnContainer}>
+                        <TouchableOpacity
+                        onPress={()=>navigation.navigate('Scanner')}><Text>navigate to scanner</Text></TouchableOpacity>
+                    </View>
+                </View>
+            </KeyboardAvoidingView>
         </View>
     );
 }
 
-const styles = {
-  container: {
-    flex: 1,
-    paddingTop: 50,
-  }
-}
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: Platform.OS === 'android' ? 50 : 0,
+    },
+    footer: {
+        paddingBottom: 5,
+        alignSelf: 'stretch',
+    },
+
+    btnContainer: {
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    }
+})

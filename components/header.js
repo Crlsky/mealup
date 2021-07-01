@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Platform } from 'react-native';
 
 export default function Header() {
     return (
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: 'dodgerblue',
         flexDirection: 'row',
-        paddingTop: '7%',
+        paddingTop: Platform.OS === 'android' ? 50 : 0,
         paddingLeft: 5,
         borderRadius: 10
     },
