@@ -6,7 +6,7 @@ export default function AddButton({navigation}) {
         <View style={styles.circle}>
             <Text 
                 style={styles.buttonText}
-                onPress={()=>navigation.navigate('Scanner')}>+</Text>
+                onPress={()=>navigation.navigate('Category')}>+</Text>
         </View>
     )
 }

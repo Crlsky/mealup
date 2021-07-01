@@ -5,14 +5,12 @@ import ListItem from './listItem';
 export default function ProductList({ productList, deleteProduct }) { 
 
     return (
-        <ScrollView >
-            <FlatList
-                data={productList}
-                keyExtractor={(item)=> item.id.toString()}
-                renderItem={({item})=>(
-                    <ListItem item={item} deleteProduct={deleteProduct}/>
-              )}
-            />
-        </ScrollView>
+        <FlatList
+            data={productList}
+            keyExtractor={(item)=> item.id.toString()}
+            renderItem={({item})=>(
+                <ListItem item={item} deleteProduct={deleteProduct}/>
+            )}
+        />
     )
 }

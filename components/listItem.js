@@ -6,14 +6,16 @@ export default function ListItem({item, deleteProduct}) {
         <View style={styles.productContainer}>
             <View style={styles.row}>
                 <Text style={styles.productName}>{item.name}</Text>
+                {item.quantity && 
                 <Text 
                     style={styles.trash}
                     onPress={()=>{deleteProduct(item.id)}}>🗑️</Text>
+                }
             </View>
 
             <View style={styles.row}>
-                <Text style={styles.productQuantity}>{item.quantity}g</Text>
-                <Text>{item.quantity*item.kcal/100} kcal</Text>
+                <Text style={styles.productQuantity}>{item.quantity ? item.quantity : 100}{item.unit}</Text>
+                <Text>{item.quantity ? item.quantity*item.kcal/100: item.kcal} kcal</Text>
             </View>
         </View>
     )
@@ -52,9 +54,5 @@ const styles = StyleSheet.create({
         fontSize: 15,
         alignSelf: 'flex-start',
     },
-
-    trash: {
-
-    }
 
 });
