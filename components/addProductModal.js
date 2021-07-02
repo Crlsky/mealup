@@ -5,7 +5,7 @@ import RadioButton from 'expo-radio-button'
 
 
 
-export default function ProductModal({modalVisible, setModalVisible, ean}) {
+export default function ProductModal({modalVisible, setModalVisible, navigation, ean}) {
     const [name, onChangeName] = useState(null);
     const [manufacturer, onChangeManufacturer] = useState(null);
     const [calories, onChangeCalories] = useState(null);

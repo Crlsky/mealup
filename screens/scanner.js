@@ -22,17 +22,17 @@ export default function Scanner({route,navigation}) {
     fetch('https://world.openfoodfacts.org/api/v0/product/'+ean+'.json')
     .then((response) => response.json())
     .then((json) => {
-      if(json==='undefined' || json.status == 0){
+      if(json ===' undefined' || json.status == 0 || !json.product.product_name || !json.product.nutriments['energy-kcal_100g']){
         mealUpDB(ean);
         return false;
       }
-     
+
       const item = { 
         id: Math.floor(Math.random()*100), 
         name: json.product.product_name, 
         unit: 'g', 
         kcal: json.product.nutriments['energy-kcal_100g']}
-      
+              
       navigation.navigate('Weighing',{
         item: item,
         setProductList: setProductList
@@ -89,6 +89,7 @@ export default function Scanner({route,navigation}) {
       <ProductModal 
         modalVisible={modalVisible} 
         setModalVisible={setModalVisible} 
+        navigation={navigation}
         ean={ean} />
     </View>
   );
