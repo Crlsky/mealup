@@ -3,11 +3,13 @@ import { Text, View, StyleSheet, Button, Image,  } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import ProductModal from '../components/addProductModal';
 
-export default function Scanner() {
+export default function Scanner({route,navigation}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [ean, setEan] = useState(null);
+
+  const {setProductList} = route.params;
 
   useEffect(() => {
     (async () => {
@@ -21,36 +23,47 @@ export default function Scanner() {
     .then((response) => response.json())
     .then((json) => {
       if(json==='undefined' || json.status == 0){
+        mealUpDB(ean);
         return false;
       }
       const name = json.product.product_name;
       const kcal = json.product.nutriments['energy-kcal_100g'];
-      alert(`Product ${name} has ${kcal} kcal in 100g`);
+      const id = Math.floor(Math.random()*100);
+      
+      const item = { id: id, name: name, unit: 'g', kcal: kcal}
+      console.log(json.product);
+      navigation.navigate('Weighing',{
+        item: item,
+        setProductList: setProductList
+      })
+      return 1;
     })
   }
 
   const mealUpDB = (ean) => {
-    console.log(ean);
     fetch('http://memecloud.co:8081/classes/ajax/getProducts.php?ean='+ean)
     .then((response) => response.json())
     .then((json) => {
-      console.log(json.status);
+      console.log(json);
       if(json.status == '0'){
         setModalVisible(true);
         return 0;
       }
 
-      const name = json.name_pl;
-      const kcal = json.kcal;
-      alert(`Product ${name} has ${kcal} kcal in 100g`);
+
+
+      // navigation.navigate('Weighing',{
+      //   item: item,
+      //   setProductList: setProductList
+      // })
     })
   }
 
   const handleBarCodeScanned = ({ type, data }) => {
     setEan(data);
     setScanned(true);
-    // if(!openFoodFacts(ean))
-    mealUpDB(data);
+
+    openFoodFacts(data)
   
     setTimeout(rescanning, 3000);
   };

@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Image, Modal } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import Header from '../components/header';
 import ProductList from '../components/productList';
 import Footer from '../components/footer';
+import Logo from '../components/logo';
 
 export default function Home({navigation}) {
-    const [productList, setProductList] = useState([
-        {id: 1, name: 'wika', quantity: 200, unit: 'ml', kcal: 139},
-        {id: 2, name: 'to', quantity: 200, unit: 'ml', kcal: 169},
-        {id: 3, name: 'chuj', quantity: 200, unit: 'ml', kcal: 9},
-    ])
+    const [productList, setProductList] = useState([])
 
     const deleteProduct = (id) => {
       setProductList((prevTodos)=>{
@@ -19,15 +16,21 @@ export default function Home({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Header />
-            <ProductList productList={productList} deleteProduct={deleteProduct}/>
-            <Footer productList={productList} navigation={navigation}/>
+            <Header type={'primary'} productList={productList} setProductList={setProductList} />
+            { productList.length > 0
+            ? <ProductList productList={productList} deleteProduct={deleteProduct}/>
+            : <Logo />
+            }
+            <Footer productList={productList} setProductList={setProductList} navigation={navigation}/>
         </View>
     );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  logoContainer: {
+    flex:1,
   }
-}
+})

@@ -17,25 +17,23 @@ const styles = StyleSheet.create({
         display:'flex',
         flexDirection: "row",
         justifyContent: 'flex-end',
-        alignSelf: 'center',
+        alignSelf: 'stretch',
         alignItems: 'flex-end',
-        width: '75%',
-        height: 70,
-        marginRight: -20,
+        height: 55,
+        backgroundColor: '#586BA4',
+        borderRadius: 100,
+        marginBottom: -40,
         paddingBottom: 5,
-        backgroundColor: '#FFBC42',
-        borderTopLeftRadius: 100,
-        borderBottomLeftRadius: 100,
     },
 
     unitText: {
-        fontSize: 30,
-        marginRight: 30,
+        fontSize: 25,
+        marginRight: 70,
         marginLeft: 10,   
     },
     
     summaryDisplay: {
-        fontSize: 40,
+        fontSize: 30,
     }
 
 });
