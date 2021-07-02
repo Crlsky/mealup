@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function Counter({productList}) {
     const counter = productList.reduce((count,v) =>  count += v.kcal*v.quantity/100 , 0)

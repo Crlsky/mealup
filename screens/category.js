@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import { Keyboard, Platform, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import ProductList from '../components/productList';
 import CategoryContainer from '../components/categoryContainer';
@@ -97,7 +97,7 @@ export default function Category({route, navigation}) {
 const styles = StyleSheet.create({
     container: {
         height: '100%',
-        paddingTop: 50,
+        paddingTop: Platform.OS === 'android' ? 50 : 0,
     },
 
     footer: {

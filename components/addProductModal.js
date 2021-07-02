@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Modal, Pressable, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput } from 'react-native';
 import RadioButton from 'expo-radio-button'
 
 
@@ -25,6 +25,7 @@ export default function ProductModal({modalVisible, setModalVisible, ean}) {
     }
 
     const saveNewProduct = (jsonProduct) => {
+        console.log(jsonProduct);
         fetch('http://memecloud.co:8081/classes/ajax/insertProduct.php',{
             method: "POST",
             body: jsonProduct
@@ -44,22 +45,21 @@ export default function ProductModal({modalVisible, setModalVisible, ean}) {
               >
                 <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                  <Text style={styles.modalText}>Product no found!</Text>
-                  <Text style={styles.modalText}>Would you like to help us and add this product to database? It will take less than 3 min.</Text>
-
+                  <Text style={[styles.modalText, {fontSize: 30, fontWeight: '600'}]}>Product no found!</Text>
+                  <Text style={styles.modalText}>Would you like to help us and add this product to database? It won't take long.</Text>
                     {/* name input */}
                     <TextInput
                         style={styles.input}
                         onChangeText={onChangeName}
                         value={name}
-                        placeholder="nazwa"
+                        placeholder="Name"
                     />
                     {/* manufacturer input */}
                     <TextInput
                         style={styles.input}
                         onChangeText={onChangeManufacturer}
                         value={manufacturer}
-                        placeholder="producent"
+                        placeholder="Manufacturer"
                     />
                     {/* calories input / 100 units */}
                     <TextInput
@@ -72,12 +72,14 @@ export default function ProductModal({modalVisible, setModalVisible, ean}) {
                     {/* unit radioInput  */}
                   <View style={styles.row}>
                     <RadioButton value="g"
+                      style={styles.radio}
                       selected={unit} 
                       onSelected={(value) => setUnit(value)} 
                       radioBackground="green" >
-                      <Text>g</Text>
+                      <Text style={{marginRight: 30}}>g</Text>
                     </RadioButton>
                     <RadioButton value="ml" 
+                      style={styles.radio}
                       selected={unit} 
                       onSelected={(value) => setUnit(value)} 
                       radioBackground="green" >
@@ -86,20 +88,18 @@ export default function ProductModal({modalVisible, setModalVisible, ean}) {
                   </View>
 
                   <View style={styles.row}>
-                    <Pressable
-                        style={[styles.button, styles.buttonAdd]}
-                        disabled={name && calories && manufacturer ? false : true}
-                        onPress={() => makeJsonProduct()}
-                    >
-                    <Text style={styles.textStyle}>Add</Text>
-                    </Pressable>
-
-                    <Pressable
+                    <TouchableOpacity
                         style={[styles.button, styles.buttonClose]}
-                        onPress={() => setModalVisible(!modalVisible)}
-                    >
-                    <Text style={styles.textStyle}>No, thanks</Text>
-                    </Pressable>
+                        onPress={() => setModalVisible(!modalVisible)} >
+                      <Text style={styles.textStyle}> No </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={[styles.button, styles.buttonAdd]}
+                        disabled={!name || !calories || !manufacturer || !unit ? true : false}
+                        onPress={() => makeJsonProduct()} >
+                      <Text style={styles.textStyle}>Add</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
                 </View>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: 22,
       },
       modalView: {
         margin: 20,
@@ -122,6 +122,8 @@ const styles = StyleSheet.create({
         padding: 35,
         alignItems: "center",
         shadowColor: "#000",
+        borderWidth: 4,
+        borderColor: '#A2A72D',
         shadowOffset: {
           width: 0,
           height: 2
@@ -131,19 +133,23 @@ const styles = StyleSheet.create({
         elevation: 5
       },
       button: {
+        paddingLeft: '15%',
+        paddingRight: '15%',
+        marginLeft: 10,
+        marginRight: 10,
         borderRadius: 20,
         padding: 10,
         elevation: 2
       },
       buttonAdd: {
-        backgroundColor: "#F194FF",
+        backgroundColor: "#BE6E46",
       },
       buttonAddInactive: {
         borderColor: '#F194FF',
         borderWidth: 3,
       },
       buttonClose: {
-        backgroundColor: "#2196F3",
+        backgroundColor: "#586BA4",
       },
       textStyle: {
         color: "white",
@@ -155,13 +161,26 @@ const styles = StyleSheet.create({
         textAlign: "center"
       },
       input: {
-        backgroundColor: 'purple',
-        width: 250,
+        width: 200,
         padding: 5,
+        paddingLeft: 10,
+        paddingBottom: 5,
+        marginTop: 10,
+        borderRadius: 20,
+        borderColor: '#3A7D44',
+        textAlign: 'left',
+        borderWidth: 4,
       },
       row: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10,
+        marginBottom: 10,
+      },
+
+      radio: {
+        marginLeft: 20,
       }
 
 });

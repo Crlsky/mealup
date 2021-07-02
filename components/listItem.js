@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 export default function ListItem({item, setProductList, deleteProduct, navigation}) {
-    if(item.quantity)
+    if(item.quantity != undefined)
         return (
             <View style={styles.productContainer}>
                 <View style={styles.row}>
@@ -17,8 +17,8 @@ export default function ListItem({item, setProductList, deleteProduct, navigatio
                 </View>
 
                 <View style={styles.row}>
-                    <Text style={styles.productQuantity}>{item.quantity ? item.quantity : 100}{item.unit}</Text>
-                    <Text>{item.quantity ? item.quantity*item.kcal/100: item.kcal} kcal</Text>
+                    <Text style={styles.productQuantity}>{item.quantity}{item.unit}</Text>
+                    <Text style={styles.productQuantity}>{item.kcal.toString()}kcal/100{item.unit}</Text>
                 </View>
             </View>
         )

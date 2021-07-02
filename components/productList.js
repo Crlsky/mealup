@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import ListItem from './listItem';
 
 export default function ProductList({ productList, searchProductList, setProductList, deleteProduct, navigation }) { 

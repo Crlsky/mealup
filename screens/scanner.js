@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Image,  } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import ProductModal from '../components/addProductModal';
 
@@ -26,12 +26,13 @@ export default function Scanner({route,navigation}) {
         mealUpDB(ean);
         return false;
       }
-      const name = json.product.product_name;
-      const kcal = json.product.nutriments['energy-kcal_100g'];
-      const id = Math.floor(Math.random()*100);
+     
+      const item = { 
+        id: Math.floor(Math.random()*100), 
+        name: json.product.product_name, 
+        unit: 'g', 
+        kcal: json.product.nutriments['energy-kcal_100g']}
       
-      const item = { id: id, name: name, unit: 'g', kcal: kcal}
-      console.log(json.product);
       navigation.navigate('Weighing',{
         item: item,
         setProductList: setProductList
@@ -44,27 +45,27 @@ export default function Scanner({route,navigation}) {
     fetch('http://memecloud.co:8081/classes/ajax/getProducts.php?ean='+ean)
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       if(json.status == '0'){
         setModalVisible(true);
         return 0;
       }
+      const item = {
+        id: json.products.id_product, 
+        name: json.products.name_en,
+        unit: json.products.unit,
+        kcal: json.products.kcal}
 
-
-
-      // navigation.navigate('Weighing',{
-      //   item: item,
-      //   setProductList: setProductList
-      // })
+      navigation.navigate('Weighing',{
+        item: item,
+        setProductList: setProductList
+      })
     })
   }
 
   const handleBarCodeScanned = ({ type, data }) => {
     setEan(data);
     setScanned(true);
-
     openFoodFacts(data)
-  
     setTimeout(rescanning, 3000);
   };
 

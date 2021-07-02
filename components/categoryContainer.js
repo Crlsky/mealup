@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'center',
         alignContent: 'flex-start',
-        marginTop: '20%',
+        marginTop: '10%',
     },
     tile: {
         backgroundColor: '#A2A72D',
