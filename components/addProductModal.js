@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput } from 'react-native';
-import RadioButton from 'expo-radio-button'
-
-
-
+import RadioButton from 'expo-radio-button';
+import config from '../config/config';
 
 export default function ProductModal({modalVisible, setModalVisible, navigation, ean}) {
     const [name, onChangeName] = useState(null);
@@ -26,7 +24,7 @@ export default function ProductModal({modalVisible, setModalVisible, navigation,
 
     const saveNewProduct = (jsonProduct) => {
         console.log(jsonProduct);
-        fetch('http://memecloud.co:8081/classes/ajax/insertProduct.php',{
+        fetch(config.insertProductURL,{
             method: "POST",
             body: jsonProduct
         })

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import ProductModal from '../components/addProductModal';
+import config from '../config/config';
 
 export default function Scanner({route,navigation}) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -19,7 +20,7 @@ export default function Scanner({route,navigation}) {
   }, []);
 
   const openFoodFacts = (ean) => {
-    fetch('https://world.openfoodfacts.org/api/v0/product/'+ean+'.json')
+    fetch(config.openFoodURL+ean+'.json')
     .then((response) => response.json())
     .then((json) => {
       if(json ===' undefined' || json.status == 0 || !json.product.product_name || !json.product.nutriments['energy-kcal_100g']){
@@ -42,7 +43,7 @@ export default function Scanner({route,navigation}) {
   }
 
   const mealUpDB = (ean) => {
-    fetch('http://memecloud.co:8081/classes/ajax/getProducts.php?ean='+ean)
+    fetch(config.getProductURL+'?ean='+ean)
     .then((response) => response.json())
     .then((json) => {
       if(json.status == '0'){

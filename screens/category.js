@@ -3,6 +3,7 @@ import { Keyboard, Platform, View, StyleSheet, TouchableOpacity, Image} from 're
 import { SearchBar } from 'react-native-elements';
 import ProductList from '../components/productList';
 import CategoryContainer from '../components/categoryContainer';
+import config from '../config/config';
 
 export default function Category({route, navigation}) {
     const [search, setSearch] = useState();
@@ -27,7 +28,7 @@ export default function Category({route, navigation}) {
     const searchProduct = (productName) => {
         setSearch(productName);
         if(productName.length>=2){
-            fetch('http://memecloud.co:8081/classes/ajax/getProducts.php?name='+productName)
+            fetch(config.getProductURL+'?name='+productName)
             .then((response) => response.json())
             .then((json) => {
                 if(json.status==1)
@@ -45,7 +46,7 @@ export default function Category({route, navigation}) {
 
     const getProductByCategory = (idCategory, name) => {
         setSearch(name);
-        fetch('http://memecloud.co:8081/classes/ajax/getProducts.php?idGroup='+idCategory)
+        fetch(config.getProductURL+'?idGroup='+idCategory)
             .then((response) => response.json())
             .then((json) => {
                 if(json.status==1)
