@@ -10,7 +10,7 @@ export default function Weighing({route, navigation}) {
     const {item, setProductList} = route.params
 
     const calculateQuantityAndSet = () => {
-        const quantity = (cup*250)+(Tbs*15)+(tbs*5)+si
+        const quantity = parseInt(si)+parseInt(cup*250)+parseInt(Tbs*15)+parseInt(tbs*5)
         setProductList((prevList)=>{
             return [
                 {id: item.id, name: item.name, quantity: quantity, unit: item.unit, kcal: item.kcal},
